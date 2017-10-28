@@ -1,0 +1,86 @@
+#digitron {
+  display: grid;
+  width: 100%;
+  height: 250px;
+  grid-template-areas: "screen  screen screen screen screen "
+                       "seven eight nine plus ce"
+                       "four five six minus ce"
+                       "one two three multiply ."
+                       "zero . equal devide .";
+  grid-template-rows: repeat(6,50px);
+  grid-template-columns: repeat(5, 50px);
+  grid-gap: 5px;
+}
+
+#digitron > #iScreen {
+  grid-area: screen;
+}
+
+#digitron > #b1 {
+  grid-area: one;
+}
+
+#digitron > #b2 {
+  grid-area: two;
+}
+
+#digitron > #b3 {
+  grid-area: three;
+}
+
+#digitron > #b4 {
+  grid-area: four;
+}
+
+#digitron > #b5 {
+  grid-area: five;
+}
+
+#digitron > #b6 {
+  grid-area: six;
+}
+
+#digitron > #b7 {
+  grid-area: seven;
+}
+
+#digitron > #b8 {
+  grid-area: eight;
+}
+
+#digitron > #b9 {
+  grid-area: nine;
+}
+
+#digitron > #b0 {
+  grid-area: zero;
+}
+
+#digitron > #bPlus {
+  grid-area: plus;
+}
+
+#digitron > #bMinus {
+  grid-area: minus;
+}
+
+#digitron > #bMultiply {
+  grid-area: multiply;
+}
+
+#digitron > #bDevide {
+  grid-area: devide;
+}
+
+#digitron > #bEqual {
+  grid-area: equal;
+}
+
+#digitron > #bCE {
+  grid-area: ce;
+}
+
+#iScreen {
+  text-align: right;
+  font-size: 32px;
+}
