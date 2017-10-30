@@ -3,10 +3,11 @@
   width: 100%;
   height: 250px;
   grid-template-areas: "screen  screen screen screen screen "
+                       ". mr madd . mc"
                        "seven eight nine plus ce"
                        "four five six minus ce"
-                       "one two three multiply ."
-                       "zero . equal devide .";
+                       "one two three multiply equal"
+                       "zero . dot devide equal";
   grid-template-rows: repeat(6,50px);
   grid-template-columns: repeat(5, 50px);
   grid-gap: 5px;
@@ -78,6 +79,22 @@
 
 #digitron > #bCE {
   grid-area: ce;
+}
+
+#digitron > #bDot {
+  grid-area: dot;
+}
+
+#digitron > #bMC {
+  grid-area: mc;
+}
+
+#digitron > #bMAdd {
+  grid-area: madd;
+}
+
+#digitron > #bMR {
+  grid-area: mr;
 }
 
 #iScreen {
