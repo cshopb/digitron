@@ -1,14 +1,50 @@
-function writeToScreen(data) {
-  document.getElementById("iScreen").value += data;
+var plusMinusPosition = 0;
+var plusMinusSwitchedOn = false;
+
+function plusMinusMovePosition(char) {
+  char = Number(char);
+  if (isNaN(char)) {
+    plusMinusPosition = 0;
+    plusMinusSwitchedOn = false;
+  } else {
+    plusMinusPosition += 1;
+  }
 }
 
-function calculate(expresion) {
-  expresion = expresion.replace(/[^0-9\.\/\+\-\*]/g, "");
+function writeToScreen(data) {
+  plusMinusMovePosition(data);
+  if (!plusMinusSwitchedOn) {
+    document.getElementById("iScreen").value += data;
+  } else {
+    document.getElementById("iScreen").value =
+            document.getElementById("iScreen").value.slice(0,-1) + data + ")";
+  }
+}
+
+function plusMinusPress(expression) {
+  let firstString = expression.slice(0, -plusMinusPosition);
+  let secondString;
+
+  if (!plusMinusSwitchedOn) {
+    secondString = expression.slice(-plusMinusPosition);
+    plusMinusPosition += 3;
+    plusMinusSwitchedOn = true;
+    return firstString + "(-" + secondString + ")";
+  } else {
+    secondString = expression.slice(-plusMinusPosition+2, -1);
+    plusMinusPosition -= 3;
+    plusMinusSwitchedOn = false;
+    return firstString + secondString;
+  }
+}
+
+function calculate(expression) {
+  expression = expression.replace(/[^0-9\.\/\+\-\*\(\)]/g, "");
   //https://stackoverflow.com/questions/10473994/javascript-adding-decimal-numbers-issue
   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
-  expresion = Math.round(eval(expresion) * 1e12) / 1e12;
-  if (Number.isFinite(expresion)) {
-    document.getElementById("iScreen").value = expresion;
+  expression = Math.round(eval(expression) * 1e12) / 1e12;
+  if (Number.isFinite(expression)) {
+    document.getElementById("iScreen").value = expression;
   } else {
     window.alert("Division with zero is not allowed.")
   }
@@ -56,6 +92,7 @@ button["dot"] = document.getElementById("bDot");
 button["mc"] = document.getElementById("bMC");
 button["madd"] = document.getElementById("bMAdd");
 button["mr"] = document.getElementById("bMR");
+button["plusminus"] = document.getElementById("bPlusMinus");
 
 button["plus"].addEventListener("click",
       function () {
@@ -105,4 +142,10 @@ button["mr"].addEventListener("click",
 button["madd"].addEventListener("click",
       function () {
         memory(document.getElementById("iScreen").value);
+      });
+
+button["plusminus"].addEventListener("click",
+      function () {
+        document.getElementById("iScreen").value =
+                plusMinusPress(document.getElementById("iScreen").value);
       });

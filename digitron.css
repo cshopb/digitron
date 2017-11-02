@@ -3,7 +3,7 @@
   width: 100%;
   height: 250px;
   grid-template-areas: "screen  screen screen screen screen "
-                       ". mr madd . mc"
+                       "plusminus . mr madd mc"
                        "seven eight nine plus ce"
                        "four five six minus ce"
                        "one two three multiply equal"
@@ -95,6 +95,10 @@
 
 #digitron > #bMR {
   grid-area: mr;
+}
+
+#digitron > #bPlusMinus {
+  grid-area: plusminus;
 }
 
 #iScreen {
