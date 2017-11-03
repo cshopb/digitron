@@ -25,16 +25,18 @@ function plusMinusPress(expression) {
   let firstString = expression.slice(0, -plusMinusPosition);
   let secondString;
 
-  if (!plusMinusSwitchedOn) {
+  if (plusMinusSwitchedOn) {
+    secondString = expression.slice(-plusMinusPosition + 2, -1);
+    plusMinusPosition -= 3; // we removed 3 characters from the expression
+    plusMinusSwitchedOn = false;
+    return firstString + secondString;
+  } else if (isNaN(expression.slice(-1)) == false) {
     secondString = expression.slice(-plusMinusPosition);
-    plusMinusPosition += 3;
+    plusMinusPosition += 3; // we added 3 new characters to the expression
     plusMinusSwitchedOn = true;
     return firstString + "(-" + secondString + ")";
   } else {
-    secondString = expression.slice(-plusMinusPosition+2, -1);
-    plusMinusPosition -= 3;
-    plusMinusSwitchedOn = false;
-    return firstString + secondString;
+    return expression;
   }
 }
 
@@ -66,67 +68,28 @@ function memory(data) {
   }
 }
 
-// Get elements and add event listeners
+// refactored Event listeners
+// https://davidwalsh.name/event-delegate
+// https://developer.mozilla.org/en-US/docs/Web/API/Event/target
+
+document.getElementById("digitron").addEventListener("click", function(e) {
+  if (e.target && e.target.className == "toScreen") {
+    writeToScreen(e.target.textContent);
+  }
+});
 
 var button = [];
 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let
-//https://stackoverflow.com/questions/19586137/addeventlistener-using-for-loop-and-passing-values
-for (i = 0; i < 10; i++) {
-  button[i] = document.getElementById("b" + i);
-  let k = i;
-  button[i].addEventListener("click",
-           function(){
-             writeToScreen(k);
-           });
-}
-
-
-button["plus"] = document.getElementById("bPlus");
-button["minus"] = document.getElementById("bMinus");
-button["multiply"] = document.getElementById("bMultiply");
-button["devide"] = document.getElementById("bDevide");
 button["equal"] = document.getElementById("bEqual");
 button["ce"] = document.getElementById("bCE");
-button["dot"] = document.getElementById("bDot");
 button["mc"] = document.getElementById("bMC");
 button["madd"] = document.getElementById("bMAdd");
 button["mr"] = document.getElementById("bMR");
 button["plusminus"] = document.getElementById("bPlusMinus");
 
-button["plus"].addEventListener("click",
-      function () {
-        writeToScreen("+");
-      });
-
-button["minus"].addEventListener("click",
-      function () {
-        writeToScreen("-");
-      });
-
-button["multiply"].addEventListener("click",
-      function () {
-        writeToScreen("*");
-      });
-
-button["devide"].addEventListener("click",
-      function () {
-        writeToScreen("/");
-      });
-
-button["equal"].addEventListener("click",
-      function () {
-        calculate(document.getElementById("iScreen").value);
-      });
-
 button["ce"].addEventListener("click",
       function () {
         document.getElementById("iScreen").value = "";
-      });
-
-button["dot"].addEventListener("click",
-      function () {
-        writeToScreen(".");
       });
 
 button["mc"].addEventListener("click",
@@ -149,3 +112,54 @@ button["plusminus"].addEventListener("click",
         document.getElementById("iScreen").value =
                 plusMinusPress(document.getElementById("iScreen").value);
       });
+
+button["equal"].addEventListener("click",
+      function () {
+        calculate(document.getElementById("iScreen").value);
+      });
+
+// Get elements and add event listeners
+
+// // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let
+// //https://stackoverflow.com/questions/19586137/addeventlistener-using-for-loop-and-passing-values
+// for (i = 0; i < 10; i++) {
+//   button[i] = document.getElementById("b" + i);
+//   let k = i;
+//   button[i].addEventListener("click",
+//            function(){
+//              writeToScreen(k);
+//            });
+// }
+//
+//
+// button["plus"] = document.getElementById("bPlus");
+// button["minus"] = document.getElementById("bMinus");
+// button["multiply"] = document.getElementById("bMultiply");
+// button["devide"] = document.getElementById("bDevide");
+// button["dot"] = document.getElementById("bDot");
+
+//
+// button["plus"].addEventListener("click",
+//       function () {
+//         writeToScreen("+");
+//       });
+//
+// button["minus"].addEventListener("click",
+//       function () {
+//         writeToScreen("-");
+//       });
+//
+// button["multiply"].addEventListener("click",
+//       function () {
+//         writeToScreen("*");
+//       });
+//
+// button["devide"].addEventListener("click",
+//       function () {
+//         writeToScreen("/");
+//       });
+//
+// button["dot"].addEventListener("click",
+//       function () {
+//         writeToScreen(".");
+//       });
